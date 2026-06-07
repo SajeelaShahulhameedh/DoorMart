@@ -1,0 +1,14 @@
+# NetBeans
+nbproject/private/
+build/
+nbbuild/
+dist/
+nbdist/
+nbactions.xml
+nb-configuration.xml
+
+# Maven
+target/
+
+# Database password reminder
+# Remember to change DBConnection.java password before pushing!
