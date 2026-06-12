@@ -39,9 +39,9 @@ public class LoginServlet extends HttpServlet {
                 conn.close();
                
                 if (role.equals("owner")) {
-                    response.sendRedirect("http://localhost:8080/DoorMart/owner/dashboard.html");
+                    response.sendRedirect("http://localhost:8080/DoorMart/owner/dashboard.jsp");
                 } else {
-                    response.sendRedirect("http://localhost:8080/DoorMart/customer/shops.html");
+                    response.sendRedirect("http://localhost:8080/DoorMart/customer/shops.jsp");
                 }
 
             } else {
