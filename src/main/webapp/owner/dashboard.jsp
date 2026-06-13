@@ -42,10 +42,11 @@
   <nav>
     <h2>🚪 DoorMart</h2>
     <div>
-      <a href="/DoorMart/owner/setup.jsp">Setup Shop</a>
-      <a href="/DoorMart/login.html">Logout</a>
+      <a href="http://localhost:8080/DoorMart/owner/setup.jsp">Setup Shop</a>
+      <a href="http://localhost:8080/DoorMart/owner/orders.jsp">Orders</a>
+      <a href="http://localhost:8080/DoorMart/login.html">Logout</a>
     </div>
-  </nav>
+</nav>
 
   <div class="container">
     <h1>Welcome, <%= userName %>! 👋</h1>

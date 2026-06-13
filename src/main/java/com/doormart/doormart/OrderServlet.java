@@ -80,4 +80,50 @@ public class OrderServlet extends HttpServlet {
             response.getWriter().print("{\"success\":false}");
         }
     }
+    
+    @Override
+protected void doGet(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException, IOException {
+
+    HttpSession session = request.getSession();
+    Integer userId = (Integer) session.getAttribute("userId");
+
+    if (userId == null) {
+        response.sendRedirect("http://localhost:8080/DoorMart/login.html");
+        return;
+    }
+
+    response.setContentType("application/json");
+    PrintWriter out = response.getWriter();
+
+    try {
+        Connection conn = DBConnection.getConnection();
+
+        String sql = "SELECT o.id, o.total_amount, o.status, o.delivery_address, o.created_at, u.name as customer_name FROM orders o JOIN users u ON o.customer_id = u.id JOIN shops s ON o.shop_id = s.id WHERE s.owner_id = ? ORDER BY o.created_at DESC";
+        PreparedStatement ps = conn.prepareStatement(sql);
+        ps.setInt(1, userId);
+        ResultSet rs = ps.executeQuery();
+
+        StringBuilder json = new StringBuilder("[");
+        boolean first = true;
+        while (rs.next()) {
+            if (!first) json.append(",");
+            json.append("{")
+                .append("\"id\":").append(rs.getInt("id")).append(",")
+                .append("\"customerName\":\"").append(rs.getString("customer_name")).append("\",")
+                .append("\"totalAmount\":").append(rs.getDouble("total_amount")).append(",")
+                .append("\"status\":\"").append(rs.getString("status")).append("\",")
+                .append("\"deliveryAddress\":\"").append(rs.getString("delivery_address")).append("\",")
+                .append("\"createdAt\":\"").append(rs.getString("created_at")).append("\"")
+                .append("}");
+            first = false;
+        }
+        json.append("]");
+        conn.close();
+        out.print(json.toString());
+
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+}
 }
