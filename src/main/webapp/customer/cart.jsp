@@ -12,58 +12,88 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Cart - DoorMart</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { font-family: Arial, sans-serif; background: #f5f5f5; }
-    nav { background: #e74c3c; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; }
-    nav h2 { color: white; font-size: 20px; }
-    nav a { color: white; text-decoration: none; font-size: 14px; }
-    .container { max-width: 600px; margin: 2rem auto; padding: 0 1rem; }
-    h1 { font-size: 24px; color: #2c3e50; margin-bottom: 1.5rem; }
-    .section { background: white; border-radius: 12px; padding: 1.5rem; margin-bottom: 1.5rem; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
-    .section h2 { font-size: 18px; color: #2c3e50; margin-bottom: 1rem; }
-    table { width: 100%; border-collapse: collapse; font-size: 14px; }
-    th { padding: 10px; background: #f5f5f5; text-align: left; border-bottom: 1px solid #ddd; }
-    td { padding: 10px; border-bottom: 1px solid #eee; color: #444; }
-    .total { font-size: 18px; font-weight: bold; color: #e74c3c; text-align: right; margin-top: 1rem; }
-    input { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 8px; font-size: 14px; margin-bottom: 1rem; }
-    button { width: 100%; padding: 12px; background: #e74c3c; color: white; border: none; border-radius: 8px; font-size: 16px; cursor: pointer; }
-    button:hover { background: #c0392b; }
-    .empty { text-align: center; color: #666; padding: 2rem; }
-    .remove-btn { background: none; border: none; color: #e74c3c; cursor: pointer; font-size: 14px; width: auto; padding: 0; }
-    .success { background: #e8f8e8; color: #27ae60; padding: 1rem; border-radius: 8px; text-align: center; margin-bottom: 1rem; }
+    nav { background: #C0392B; padding: 14px 24px; display: flex; justify-content: space-between; align-items: center; }
+    nav h2 { color: white; font-size: 18px; font-weight: 500; display: flex; align-items: center; gap: 8px; }
+    nav a { color: rgba(255,255,255,0.85); text-decoration: none; font-size: 14px; display: flex; align-items: center; gap: 4px; }
+    .container { max-width: 600px; margin: 24px auto; padding: 0 20px; }
+    h1 { font-size: 20px; font-weight: 500; color: #2c3e50; margin-bottom: 20px; display: flex; align-items: center; gap: 8px; }
+    .section { background: white; border: 0.5px solid #e0e0e0; border-radius: 14px; padding: 20px; margin-bottom: 16px; }
+    .section h2 { font-size: 15px; font-weight: 500; color: #2c3e50; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+    .cart-item { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 0.5px solid #f0f0f0; }
+    .cart-item:last-child { border-bottom: none; }
+    .item-info { flex: 1; }
+    .item-name { font-size: 14px; font-weight: 500; color: #2c3e50; }
+    .item-qty { font-size: 12px; color: #888; margin-top: 2px; }
+    .item-price { font-size: 15px; font-weight: 500; color: #C0392B; margin-right: 12px; }
+    .remove-btn { background: #FCEBEB; border: none; color: #C0392B; width: 30px; height: 30px; border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+    .total-row { display: flex; justify-content: space-between; align-items: center; padding-top: 16px; margin-top: 8px; border-top: 0.5px solid #f0f0f0; }
+    .total-label { font-size: 15px; color: #555; font-weight: 500; }
+    .total-amount { font-size: 20px; font-weight: 500; color: #C0392B; }
+    .form-group { margin-bottom: 14px; }
+    label { font-size: 13px; color: #555; display: block; margin-bottom: 6px; font-weight: 500; }
+    .input-wrap { position: relative; }
+    .input-wrap i { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: #aaa; font-size: 18px; }
+    input { width: 100%; padding: 10px 12px 10px 38px; border: 0.5px solid #ddd; border-radius: 10px; font-size: 14px; color: #333; outline: none; }
+    input:focus { border-color: #C0392B; }
+    .order-btn { width: 100%; padding: 14px; background: #C0392B; color: white; border: none; border-radius: 12px; font-size: 15px; font-weight: 500; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; }
+    .order-btn:hover { background: #A93226; }
+    .empty { text-align: center; color: #888; padding: 3rem; }
+    .empty i { font-size: 48px; color: #ddd; display: block; margin-bottom: 12px; }
+    .success { background: #EAF3DE; color: #3B6D11; padding: 14px; border-radius: 12px; margin-bottom: 16px; font-size: 14px; display: flex; align-items: center; gap: 8px; }
+    .cod-badge { background: #EAF3DE; color: #3B6D11; padding: 8px 14px; border-radius: 10px; font-size: 13px; display: flex; align-items: center; gap: 6px; margin-bottom: 16px; }
   </style>
 </head>
 <body>
 
   <nav>
-    <h2>🚪 DoorMart</h2>
-    <a href="http://localhost:8080/DoorMart/customer/shops.jsp">← Back to Shops</a>
+    <h2><i class="ti ti-home" aria-hidden="true"></i> DoorMart</h2>
+    <a href="http://localhost:8080/DoorMart/customer/shops.jsp"><i class="ti ti-arrow-left" aria-hidden="true"></i> Back to Shops</a>
   </nav>
 
   <div class="container">
-    <h1>🛒 Your Cart</h1>
+    <h1><i class="ti ti-shopping-cart" aria-hidden="true"></i> Your Cart</h1>
 
     <div id="success-msg"></div>
 
-    <div class="section">
-      <h2>Order Items</h2>
-      <div id="cart-area"><p class="empty">Your cart is empty!</p></div>
-      <div class="total" id="total"></div>
+    <div class="section" id="cart-section">
+      <h2><i class="ti ti-list" aria-hidden="true"></i> Order Items</h2>
+      <div id="cart-area"><p class="empty"><i class="ti ti-shopping-cart"></i>Your cart is empty!</p></div>
     </div>
 
     <div class="section" id="order-section" style="display:none;">
-      <h2>Delivery Details</h2>
-      <input type="text" id="deliveryAddress" placeholder="Your delivery address" />
-      <input type="text" id="deliveryPhone" placeholder="Your phone number" />
-      <button onclick="placeOrder()">Place Order 🎉</button>
+      <h2><i class="ti ti-truck" aria-hidden="true"></i> Delivery Details</h2>
+      <div class="cod-badge">
+        <i class="ti ti-cash" aria-hidden="true"></i>
+        Cash on delivery — pay when you receive!
+      </div>
+      <div class="form-group">
+        <label>Delivery address</label>
+        <div class="input-wrap">
+          <i class="ti ti-map-pin"></i>
+          <input type="text" id="deliveryAddress" placeholder="Your delivery address" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Phone number</label>
+        <div class="input-wrap">
+          <i class="ti ti-phone"></i>
+          <input type="text" id="deliveryPhone" placeholder="07X XXXXXXX" />
+        </div>
+      </div>
+      <button class="order-btn" onclick="placeOrder()">
+        <i class="ti ti-check" aria-hidden="true"></i>
+        Place Order
+      </button>
     </div>
   </div>
 
   <script>
     let cart = JSON.parse(localStorage.getItem('cart') || '[]');
     const shopId = localStorage.getItem('shopId');
-
     window.onload = renderCart;
 
     function renderCart() {
@@ -71,27 +101,29 @@
       const orderSection = document.getElementById('order-section');
 
       if (cart.length === 0) {
-        area.innerHTML = '<p class="empty">Your cart is empty!</p>';
-        document.getElementById('total').textContent = '';
+        area.innerHTML = '<p class="empty"><i class="ti ti-shopping-cart"></i>Your cart is empty!</p>';
         orderSection.style.display = 'none';
         return;
       }
 
-      let rows = '';
+      let html = '';
+      let total = 0;
       for (let i = 0; i < cart.length; i++) {
         let item = cart[i];
-        rows += '<tr>';
-        rows += '<td>' + item.name + '</td>';
-        rows += '<td>' + item.quantity + '</td>';
-        rows += '<td>Rs. ' + (item.price * item.quantity) + '</td>';
-        rows += '<td><button class="remove-btn" onclick="removeItem(' + i + ')">❌</button></td>';
-        rows += '</tr>';
+        let itemTotal = item.price * item.quantity;
+        total += itemTotal;
+        html += '<div class="cart-item">';
+        html += '<div class="item-info">';
+        html += '<p class="item-name">' + item.name + '</p>';
+        html += '<p class="item-qty">Qty: ' + item.quantity + '</p>';
+        html += '</div>';
+        html += '<span class="item-price">Rs. ' + itemTotal + '</span>';
+        html += '<button class="remove-btn" onclick="removeItem(' + i + ')"><i class="ti ti-x" aria-hidden="true"></i></button>';
+        html += '</div>';
       }
 
-      area.innerHTML = '<table><thead><tr><th>Product</th><th>Qty</th><th>Price</th><th></th></tr></thead><tbody>' + rows + '</tbody></table>';
-
-      const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-      document.getElementById('total').textContent = 'Total: Rs. ' + total;
+      html += '<div class="total-row"><span class="total-label">Total</span><span class="total-amount">Rs. ' + total + '</span></div>';
+      area.innerHTML = html;
       orderSection.style.display = 'block';
     }
 
@@ -130,7 +162,7 @@
           localStorage.removeItem('shopId');
           cart = [];
           renderCart();
-          document.getElementById('success-msg').innerHTML = '<div class="success">🎉 Order placed successfully! Shop owner will contact you soon.</div>';
+          document.getElementById('success-msg').innerHTML = '<div class="success"><i class="ti ti-check" aria-hidden="true"></i> Order placed successfully! Shop owner will contact you soon.</div>';
         } else {
           alert('Order failed! Please try again.');
         }
